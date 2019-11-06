@@ -247,8 +247,8 @@ trait Billable
     {
         $options = empty($options) ? [
             'contact' => [
-                'first'   => $this->extractFirstName(),
-                'last'    => $this->extractLastName(),
+                'first'   => $this->first_name,
+                'last'    => $this->last_name,
                 'email'   => $this->email,
                 'company' => $this->fastspring_company,
                 'phone'   => $this->phone,
@@ -286,8 +286,8 @@ trait Billable
 
         $options = empty($options) ? [
             'contact' => [
-                'first'   => $this->extractFirstName(),
-                'last'    => $this->extractLastName(),
+                'first'   => $this->first_name,
+                'last'    => $this->last_name,
                 'email'   => $this->email,
                 'company' => $this->fastspring_company,
                 'phone'   => $this->phone,
