@@ -4,7 +4,6 @@ namespace Bgultekin\CashierFastspring\Listeners;
 
 use Bgultekin\CashierFastspring\Events;
 use Bgultekin\CashierFastspring\Invoice;
-use Illuminate\Support\Facades\Log;
 
 /**
  * This class is a listener for order completed events.
@@ -37,25 +36,22 @@ class OrderCompleted extends Base
      */
     public function handle(Events\OrderCompleted $event)
     {
-
         // try to find that invoice on the database
         // if not exists then create one
         $data = $event->data;
-        Log::error($data);
-        $subscription = $data['items'][0];
+        $subscription = $data['items'][0]['subscription'];
 
         $invoice = Invoice::firstOrNew([
             'fastspring_id' => $data['id'],
             'type'          => 'subscription',
         ]);
 
-
-//        $periodStartDate = $data['nextInSeconds'];
-//        $periodEndDate = $data['beginInSeconds'];
+        $periodStartDate = $subscription['nextInSeconds'];
+        $periodEndDate = $subscription['beginInSeconds'];
 
         // fill the model
-//        $invoice->subscription_sequence = $data['sequence'];
-        $invoice->user_id = $this->getUserByFastspringId($data['account'])->id;
+        $invoice->subscription_sequence = $subscription['sequence'];
+        $invoice->user_id = $this->getUserByFastspringId($data['account']['id'])->id;
         $invoice->subscription_display = $subscription['display'];
         $invoice->subscription_product = $subscription['product'];
         $invoice->invoice_url = $data['invoiceUrl'];
@@ -66,8 +62,8 @@ class OrderCompleted extends Base
         $invoice->currency = $data['currency'];
         $invoice->payment_type = $data['payment']['type'];
         $invoice->completed = $data['completed'];
-//        $invoice->subscription_period_start_date = date('Y-m-d H:i:s', $periodStartDate);
-//        $invoice->subscription_period_end_date = date('Y-m-d H:i:s', $periodEndDate);
+        $invoice->subscription_period_start_date = date('Y-m-d H:i:s', $periodStartDate);
+        $invoice->subscription_period_end_date = date('Y-m-d H:i:s', $periodEndDate);
 
         // and save
         $invoice->save();

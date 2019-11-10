@@ -5,7 +5,6 @@ namespace Bgultekin\CashierFastspring\Listeners;
 use Bgultekin\CashierFastspring\Events;
 use Bgultekin\CashierFastspring\Subscription;
 use Bgultekin\CashierFastspring\SubscriptionPeriod;
-use Illuminate\Support\Facades\Log;
 
 /**
  * This class is a listener for subscription state change events.
@@ -40,10 +39,8 @@ class SubscriptionActivated extends Base
     {
         $data = $event->data;
 
-        Log::error($data);
-
         // first look for is there any subscription
-        $user = $this->getUserByFastspringId($data['account']);
+        $user = $this->getUserByFastspringId($data['account']['id']);
         $subscriptionName = isset($data['tags']['name']) ? $data['tags']['name'] : 'default';
 
         $subscription = $user->subscription();
@@ -56,7 +53,7 @@ class SubscriptionActivated extends Base
 
         // fill
         $subscription->fastspring_id = $data['id'];
-        $subscription->plan = $data['product'];
+        $subscription->plan = $data['product']['product'];
         $subscription->state = $data['state'];
         $subscription->currency = $data['currency'];
         $subscription->quantity = $data['quantity'];
