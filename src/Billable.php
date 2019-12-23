@@ -318,44 +318,4 @@ trait Billable
         return Fastspring::getAccount($this->fastspring_id);
     }
 
-    /**
-     * Get the first name of the customer for the Fastspring API.
-     *
-     * @return object
-     */
-    public function extractFirstName()
-    {
-        $parted = explode(' ', $this->name);
-        $parted = array_filter($parted);
-
-        if (count($parted) == 1) {
-            return $parted[0];
-        }
-
-        // get rid of the lastname
-        array_pop($parted);
-
-        // implode rest of it, so there may be more than one name
-        return implode(' ', $parted);
-    }
-
-    /**
-     * Get the last name of the customer for the Fastspring API.
-     *
-     * @return object
-     */
-    public function extractLastName()
-    {
-        $parted = explode(' ', $this->name);
-        $parted = array_filter($parted);
-
-        if (count($parted) == 1) {
-            // unfortunately we should do this
-            // because Fastspring create account API doesn't work without last name
-            return 'Unknown';
-        }
-
-        // return last element
-        return array_pop($parted);
-    }
 }

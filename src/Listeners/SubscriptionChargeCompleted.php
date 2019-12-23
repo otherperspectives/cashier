@@ -4,6 +4,7 @@ namespace Bgultekin\CashierFastspring\Listeners;
 
 use Bgultekin\CashierFastspring\Events;
 use Bgultekin\CashierFastspring\Invoice;
+use Bgultekin\CashierFastspring\Plan;
 use Bgultekin\CashierFastspring\Subscription;
 use Carbon\Carbon;
 
@@ -76,6 +77,11 @@ class SubscriptionChargeCompleted extends Base
 
         // and save
         $invoice->save();
+
+        //reset swaps
+        $invoice->user()->update([
+            'profile_swaps' => Plan::where('gateway_id', $invoice->subscription_product)->first()->profiles_limit
+        ]);
 
         if ($subscription) {
             $subscription->state = 'active';
