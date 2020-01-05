@@ -54,8 +54,6 @@ class Subscription extends Model
      */
     public function activePeriod()
     {
-        $this->activePeriodOrCreate();
-
         return $this->hasOne('Bgultekin\CashierFastspring\SubscriptionPeriod')
                     ->where('start_date', '<=', Carbon::now()->format('Y-m-d H:i:s'))
                     ->where('end_date', '>=', Carbon::now()->format('Y-m-d H:i:s'))
