@@ -4,6 +4,7 @@ namespace Bgultekin\CashierFastspring\Listeners;
 
 use Bgultekin\CashierFastspring\Events;
 use Bgultekin\CashierFastspring\Invoice;
+use Bgultekin\CashierFastspring\Plan;
 
 /**
  * This class is a listener for order completed events.
@@ -64,6 +65,10 @@ class OrderCompleted extends Base
         $invoice->completed = $data['completed'];
         $invoice->subscription_period_start_date = date('Y-m-d H:i:s', $periodStartDate);
         $invoice->subscription_period_end_date = date('Y-m-d H:i:s', $periodEndDate);
+
+        $invoice->user()->update([
+            'swaps' => Plan::where('gateway_id', $invoice->subscription_product)->first()->profiles_limit
+        ]);
 
         // and save
         $invoice->save();

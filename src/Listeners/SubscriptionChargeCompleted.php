@@ -80,7 +80,7 @@ class SubscriptionChargeCompleted extends Base
 
         //reset swaps
         $invoice->user()->update([
-            'profile_swaps' => Plan::where('gateway_id', $invoice->subscription_product)->first()->profiles_limit
+            'swaps' => Plan::where('gateway_id', $invoice->subscription_product)->first()->profiles_limit
         ]);
 
         if ($subscription) {
