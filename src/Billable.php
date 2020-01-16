@@ -318,14 +318,4 @@ trait Billable
         return Fastspring::getAccount($this->fastspring_id);
     }
 
-     /**
-     * Get the Fastspring customer for the model.
-     *
-     * @return object
-     */
-    public function hasTeamSubscription()
-    {
-        return $this->plan->isForTeams();
-    }
-
 }
