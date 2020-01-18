@@ -318,4 +318,28 @@ trait Billable
         return Fastspring::getAccount($this->fastspring_id);
     }
 
+
+    public function hasSubscription()
+    {
+        if($this->hasPiggybackSubscription()){
+            return true;
+        }
+        return $this->subscribed();
+    }
+
+    public function hasTeamSubscription()
+    {
+        return optional($this->plan)->isForTeams();
+    }
+
+    public function hasPiggybackSubscription()
+    {
+        foreach ($this->teams as $team) {
+            if ($team->owner->hasSubscription()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
