@@ -508,4 +508,9 @@ class Subscription extends Model
         // TODO: it might be better to create custom exception
         throw new Exception('Resume operation failed. Response: '.json_encode($response));
     }
+
+    public function plan(){
+        return $this->hasOne(Plan::class, 'gateway-id','plan');
+    }
+
 }

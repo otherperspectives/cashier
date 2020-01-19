@@ -81,5 +81,7 @@ class SubscriptionActivated extends Base
                 'end_date'        => date('Y-m-d', $instruction['periodEndDateInSeconds']),
             ]);
         }
+
+        $user->resetTeamMembers();
     }
 }
