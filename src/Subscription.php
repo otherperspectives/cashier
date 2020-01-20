@@ -510,7 +510,7 @@ class Subscription extends Model
     }
 
     public function plan(){
-        return $this->hasOne(Plan::class, 'gateway-id','plan');
+        return Plan::where('gateway_id', '=', $this->plan)->first();
     }
 
 }

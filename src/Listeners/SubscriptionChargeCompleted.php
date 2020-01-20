@@ -82,11 +82,14 @@ class SubscriptionChargeCompleted extends Base
         $invoice->user()->update([
             'swaps' => Plan::where('gateway_id', $invoice->subscription_product)->first()->profiles_limit
         ]);
-        $invoice->user()->resetTeamMembers();
+
 
         if ($subscription) {
             $subscription->state = 'active';
             $subscription->save();
+            $subscription->user()->resetTeamMembers();
         }
+
+
     }
 }
