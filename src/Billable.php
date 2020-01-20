@@ -345,7 +345,7 @@ trait Billable
     public function resetTeamMembers()
     {
         if ($this->team->users->count() > $this->subscription()->plan()->teams_limit) {
-            $this->team->users->delete();
+            $this->team->users()->delete();
         }
     }
 
