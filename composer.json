@@ -9,16 +9,6 @@
             "email": "bilal@gultekin.me"
         }
     ],
-    "require": {
-        "php": ">=8.3"
-    },
-    "require-dev": {
-        "illuminate/http": "^9.0",
-        "illuminate/routing": "^9.0",
-        "mockery/mockery": "~1.0",
-        "phpunit/phpunit": "^9.5",
-        "vlucas/phpdotenv": "~3"
-    },
     "autoload": {
         "psr-4": {
             "Bgultekin\\CashierFastspring\\": "src/"
